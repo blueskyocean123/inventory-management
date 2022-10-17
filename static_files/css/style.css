@@ -1,0 +1,9 @@
+.auth-bg {
+    background: url('../img/bg.png');
+    background-position: center;
+    background-size: cover;
+}
+
+[v-cloak] {
+    display: none !important;
+}

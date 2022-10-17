@@ -1,0 +1,183 @@
+{% extends './base.html' %}
+
+{% block title %}Dashboard - {% endblock title %}
+
+{% block body %}
+
+{% if not user.is_customer %}
+<div class="row">
+    <!-- Customers Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Customers</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_customer }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sales Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Sells</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_sell }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Products
+                        </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ total_products }}</div>
+                            </div>
+                            <div class="col">
+                                <div class="progress progress-sm mr-2">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
+                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-fw fa-boxes fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suppliers Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                            Orders</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ orders.count }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-file-invoice fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Product List</h6>
+            </div>
+            <div class="card-body">
+
+                {% comment %} <div class="d-flex justify-content-end">
+                    <a class="btn btn-primary btn-sm mb-3" href="{% url 'core:product-download-csv' %}">Download CSV</a>
+                </div> {% endcomment %}
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Sell Price</th>
+                                {% if request.user.is_customer %}
+                                <th>Action</th>
+                                {% endif %}
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in products %}
+                            <tr>
+                                {% comment %} <td>{{ product.chalan }}</td> {% endcomment %}
+                                <td>{{ product.product_name }}</td>
+                                <td>{{ product.quantity }}</td>
+                                <td>{{ product.sell_price }}</td>
+
+
+                                {% if request.user.is_customer %}
+                                <td>
+                                    <a class="btn btn-primary btn-sm"
+                                        href="{% url 'order:order-create' product.pk %}">Order</a>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card mb-3 shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Pending Orders</h6>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Phone</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            {% comment %} <td>{{ product.chalan }}</td> {% endcomment %}
+                            <td>{{ order.product.product_name }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.user.phone }}</td>
+                            <td><a href="" class="btn btn-primary">View</a></td>
+
+
+                            {% if request.user.is_customer %}
+                            <td>
+                                <a class="btn btn-primary btn-sm"
+                                    href="{% url 'order:order-create' product.pk %}">Order</a>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

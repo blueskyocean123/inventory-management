@@ -1,0 +1,119 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}New Sale - {% endblock title %}
+
+{% block body %}
+<main>
+    <div class="row">
+        <div class="col">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ title|title }}</h6>
+                </div>
+                <div class="card-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form.product|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.customer|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form.quantity|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.price|as_crispy_field }}
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                            <button id="sellSubmit" class="btn btn-primary ml-2" type="submit">Submit</button>
+                        </div>
+                    </form>
+
+
+
+                    {% comment %} loader {% endcomment %}
+                    {% comment %} <div class="d-flex justify-content-center">
+                        <div id="loading" class="spinner-border" role="status">
+                        </div>
+                    </div> {% endcomment %}
+
+                    <!-- messges -->
+                    {% comment %} <div id="message"></div> {% endcomment %}
+
+                    {% comment %} <div class="Product-form">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="customerPhone">Customer Phone</label>
+                                    <input type="number" class="form-control" id="customerPhone">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="customerName">Customer Name</label>
+                                    <input type="text" class="form-control" id="customerName">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="cart-product-make_list mt-4">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <tbody id="cartData" class="">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between">
+                                <div class="col-md-5">
+                                    <label for="value">Product <span class="asteriskField">*</span></label>
+                                    <input type="hidden" id="productValue">
+                                    <input class="form-control" id='value' type="text" autocomplete="on"
+                                        placeholder="Product" />
+                                    <div id="dropdown" class="">
+                                        <select class="form-control" name="list" id="list"></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="productPrice">Price</label>
+                                    <input type="text" class="form-control" name="productPrice" id="productPrice">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="productQuantity">Quantity</label>
+                                    <input type="number" class="form-control" name="productQuantity"
+                                        id="productQuantity">
+                                </div>
+                                <div class="col-md-1">
+                                    <label for=""></label>
+                                    <button onclick="addProductToCart()" type="button"
+                                        class="btn btn-primary d-block mt-2">
+                                        ADD
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-5">
+                                <button type="reset" class="btn btn-secondary" type="submit">Reset</button>
+                                <button id="sellSubmit" class="btn btn-primary ml-2" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock body %}
+
+{% comment %} {% block extra_script %}
+<script src="{% static 'js/sell/sell-create.js' %}"></script>
+{% endblock extra_script %} {% endcomment %}

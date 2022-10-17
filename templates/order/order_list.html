@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Orders{% endblock title %}
+
+{% block body %}
+
+<main>
+    <div class="row">
+        <div class="col">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">{{title|title}}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="department-list">
+                        <div class="table-responsive">
+                            <table class="table" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                        <th>Order Status</th>
+
+                                        {% if not request.user.is_customer %}
+                                        <th>Customer Name</th>
+                                        <th>Phone</th>
+                                        {% endif %}
+
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if request.user.is_customer %}
+
+                                    {% for order in orders %}
+
+                                    <tr>
+                                        <td>{{ order.product }}</td>
+                                        <td>{{ order.product.sell_price }}</td>
+                                        <td>{{ order.quantity }}</td>
+                                        <td>{{ order.total_item_price }}</td>
+                                        <td>
+                                            {% if order.order_status %}
+                                            <span class="badge badge-success">Done</span>
+                                            {% else %}
+                                            <span class="badge badge-warning">Pending</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{{ order.get_update_url }}"
+                                                class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ order.get_delete_url }}"
+                                                class="btn btn-sm btn-outline-danger"><i
+                                                    class="fa fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+
+                                    {% endfor %}
+
+                                    {% endif  %}
+
+                                    {% if request.user.is_staff %}
+
+                                    {% for order in orders %}
+
+                                    <tr>
+                                        <td>{{ order.product }}</td>
+                                        <td>{{ order.product.sell_price }}</td>
+                                        <td>{{ order.quantity }}</td>
+                                        <td>{{ order.total_item_price }}</td>
+                                        <td>
+                                            {% if order.order_status %}
+                                            <span class="badge badge-success">Done</span>
+                                            {% else %}
+                                            <span class="badge badge-warning">Pending</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ order.user.username }}</td>
+                                        <td>{{ order.user.phone }}</td>
+                                        <td>
+                                            {% if not order.order_status %}
+                                            <a href="{% url 'order:sell-order' order.pk %}"
+                                                class="btn btn-sm btn-outline-primary">Sell</a>
+                                            {% else %}
+                                            <a href="" class="btn btn-sm btn-outline-primary">View</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                    {% endfor %}
+
+                                    {% endif %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock body %}

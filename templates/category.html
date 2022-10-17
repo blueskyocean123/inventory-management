@@ -1,0 +1,75 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Category - {% endblock title %}
+
+{% block body %}
+
+<main>
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">{{title|title}}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="category-form">
+                        <form action="" method=POST>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{form|crispy}}
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <a href="{% url 'core:category' %}" class="btn btn-secondary" type="submit">Cancel</a>
+                                <button class="btn btn-primary ml-2" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">Categories</h6>
+                </div>
+                <div class="card-body">
+                    <div class="department-list">
+                        <div class="table-responsive">
+                            <table class="table" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Sl.</th>
+                                        <th>Category</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for category in categories %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ category.name }}</td>
+                                            <td>{{ category.description }}</td>
+                                            <td>
+                                                {% if request.user.is_staff %}
+                                                <a href="{{ category.get_update_url }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                                <a href="{{ category.get_delete_url }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash-alt"></i></a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock body %}

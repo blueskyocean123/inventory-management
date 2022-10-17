@@ -1,0 +1,66 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<main id="purchase-create">
+    <div class="container-fluid">
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active">Purchase</li>
+            <li class="breadcrumb-item active">Create New Purchase</li>
+        </ol>
+        <div class="card mb-4">
+            <h5 class="card-header">{{title|title}}</h5>
+            <div class="card-body">
+
+                <div class="Product-form">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {{form.warehouse|as_crispy_field}}
+                                </div>
+                                <div class="col-md-3">
+                                    {{form.category|as_crispy_field}}
+                                </div>
+                                <div class="col-md-3">
+                                    {{form.sub_category|as_crispy_field}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {{form.product_name|as_crispy_field}}
+                                </div>
+                                <div class="col-md-2">
+                                    {{form.cost_price|as_crispy_field}}
+                                </div>
+                                <div class="col-md-2">
+                                    {{form.sell_price|as_crispy_field}}
+                                </div>
+                                <div class="col-md-2">
+                                    {{form.quantity|as_crispy_field}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    {{form.remark|as_crispy_field}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="buttons-right">
+                            <button class="btn btn-primary" type="submit">Save And Add New</button>
+                            <button class="btn btn-info" type="submit">Save And Print</button>
+                            <a class="btn btn-warning" href="{% url 'purchase:purchase-create' %}">Reset</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock body %}

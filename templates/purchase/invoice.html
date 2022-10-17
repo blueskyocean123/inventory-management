@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Invoice</title>
+
+</head>
+<body>
+    <div class="float-right" style="text-align:right">
+        <h2>Inventory</h2>
+    </div>
+    <div class="float-right" style="text-align:left">
+        <p>
+            <span style="font-size:16px"><strong>{{ purchase.added_by.organization }}</strong></span><br>
+            {{ purchase.added_by.organization.email }}<br>
+            {{ purchase.added_by.organization.phone }}<br>
+            {{ purchase.added_by.organization.address }}<br>
+        </p>
+        
+    </div>
+
+    <hr>
+
+    <h2>{{ purchase.product_name }} ----> {{ purchase.sell_price }} x {{ purchase.quantity }} = {{ purchase.total_sell_price }} Taka</h2>
+</body>
+</html>

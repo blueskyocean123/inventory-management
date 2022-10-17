@@ -1,0 +1,114 @@
+{% extends "./base.html" %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+
+
+{% block title %}Login - {% endblock title %}
+
+{% block content %}
+
+<!-- Outer Row -->
+<div class="row justify-content-center">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-6 d-none d-lg-block auth-bg"></div>
+                    <div class="col-lg-6">
+                        {% include '../includes/messages.html' %}
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h3 class="h4 text-gray-900 mb-4">Inventory Managemest System</h3>
+                            </div>
+
+                            <div class="d-flex justify-content-center mb-4">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#exampleModal">
+                                    Get Credentials
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Login Credentials</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        Super Admin:
+                                                        <span class="badge badge-primary">super@admin.com</span>
+                                                        <span class="badge badge-primary">!inventory99</span>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        Organization Staff:
+                                                        <span class="badge badge-info">staff@user.com</span>
+                                                        <span class="badge badge-info">!inventory88</span>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        Customer:
+                                                        <span class="badge badge-success">customer@user.com</span>
+                                                        <span class="badge badge-success">!inventory77</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form class="user login" action="{% url 'account_login' %}" method="POST">
+                                {% csrf_token %}
+                                {{ form|as_crispy_errors }}
+                                <div class="form-group">
+                                    {% crispy_field form.login 'class' 'form-control form-control-user' %}
+                                </div>
+                                <div class="form-group">
+                                    {% crispy_field form.password 'class' 'form-control form-control-user' %}
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox small">
+                                        <input type="checkbox" class="custom-control-input" id="showPwd">
+                                        <label class="custom-control-label" for="showPwd">Show Password</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Login
+                                </button>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="{% url 'account_reset_password' %}">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="{% url 'account_signup' %}">Create an Account!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const pwdInp = document.getElementById('id_password')
+    const showPwd = document.getElementById('showPwd')
+    showPwd.addEventListener('click', () => {
+        if (pwdInp.type === "password") {
+            pwdInp.type = "text";
+        } else {
+            pwdInp.type = "password";
+        }
+    })
+</script>
+
+{% endblock content %}

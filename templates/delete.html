@@ -1,0 +1,32 @@
+{% extends './base.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h1 class="h4 text-gray-700 mb-2">Are you sure to delete this item ?</h1>
+                            <hr>
+                            <h1 class="h5 text-gray-900 mb-2 text-center py-3">
+                                <sup><i class="fa fa-quote-left text-secondary" aria-hidden="true"></i></sup>
+                                {{ object }}
+                                <sup><i class="fa fa-quote-right text-secondary" aria-hidden="true"></i></sup>
+                            </h1>
+                            <hr>
+
+                            <div class="form-group">
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-outline-danger btn-sm" type="submit">Yes, Delete</button>
+                                    <a href="{% url 'core:home' %}" class="btn ml-2 btn-primary btn-sm">No, Don't</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

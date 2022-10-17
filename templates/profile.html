@@ -1,0 +1,55 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Profile - {% endblock title %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <div class="card shadow mb-4">
+            <div class="card-header d-flex justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">@{{ user.username }}</h6>
+                <h6 class="m-0 font-weight-bold text-primary"><a href="{% url 'core:profile-edit' user.username %}">Edit Profile</a></h6>
+            </div>
+            <div class="card-body" width="30">
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th>First Name</th>
+                                <td>:</td>
+                                <td>{{ object.first_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Last Name</th>
+                                <td>:</td>
+                                <td>{{ object.last_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Organization</th>
+                                <td>:</td>
+                                <td>{{ object.organization }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email Address</th>
+                                <td>:</td>
+                                <td>{{ object.email }} &nbsp;</td>
+                            </tr>
+                            <tr>
+                                <th>Phone Number</th>
+                                <td>:</td>
+                                <td>{{ object.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>Joining Date</th>
+                                <td>:</td>
+                                <td>{{ object.date_joined|date }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

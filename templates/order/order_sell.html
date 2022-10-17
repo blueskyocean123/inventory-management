@@ -1,0 +1,57 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Confirm Order - {% endblock title %}
+
+{% block body %}
+<main>
+    <div class="row">
+        <div class="col">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">Sale Order Item</h6>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action=".">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="d-none">
+                                {{sale_form}}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Customer Name</label>
+                                    <input type="text" class="form-control" value="{{ customer.name }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Customer Phone</label>
+                                    <input type="text" class="form-control" value="{{ customer.phone }}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{ sale_item_form.product|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ sale_item_form.quantity|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ sale_item_form.price|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="reset" class="btn btn-secondary" type="submit">Reset</button>
+                            <button class="btn btn-primary ml-2" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock body %}

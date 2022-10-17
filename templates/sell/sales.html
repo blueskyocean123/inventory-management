@@ -1,0 +1,54 @@
+{% extends '../base.html' %}
+
+{% block title %}Sales - {% endblock title %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">Sales</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Invoice</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total Price</th>
+                                <th>Customer</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sale in object_list %}
+                                <tr>
+                                    <td>{{ sale.invoice_number }}</td>
+                                    <td>{{ sale.product }}</td>
+                                    <td>{{ sale.quantity }}</td>
+                                    <td>{{ sale.price }}</td>
+                                    <td>{{ sale.total_price }}</td>
+                                    <td>{{ sale.customer }}</td>
+                                    <td>
+                                        {% if request.user.is_staff %}
+                                        <div class="btn-group" role="group" aria-label="First group">
+                                            <a href="{{ sale.get_update_url }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ sale.get_delete_url }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash-alt"></i></a>
+                                        </div>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

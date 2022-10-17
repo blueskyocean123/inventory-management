@@ -1,0 +1,114 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block body %}
+<main id="purchase-create">
+
+    <div class="row">
+        <div class="col">
+            <div class="card row mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">{{title|title}}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-end mb-4">
+                        <!-- Button trigger modal -->
+                        <div class="buttons-right">
+                            <!-- warehouse button -->
+                            <button type="button" class="btn btn-sm btn-outline-primary ml-2" data-toggle="modal"
+                                data-target="#warehouseModal">
+                                <i class="fa fa-plus"></i> Product
+                            </button>
+                        </div>
+
+                        <!-- warehouse modal -->
+                        <div class="modal fade" id="warehouseModal" tabindex="-1" aria-labelledby="warehouseModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="warehouseModalLabel">Add New Warehouse</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- show error message -->
+                                        <div id="displayError" class="d-none">
+                                            <div class="alert alert-sm alert-danger alert-dismissible fade show"
+                                                role="alert">
+                                                <span id="errorText"></span>
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <form id="newProductForm">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="newProduct" class=" requiredField">
+                                                    Name
+                                                    <span class="asteriskField">*</span>
+                                                </label>
+                                                <input type="text" name="name" maxlength="100"
+                                                    class="form-control required" required="" id="newProduct">
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <button id="productModalClose" type="button"
+                                                    class="btn btn-secondary mr-1" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" id="productAddBtn">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="Product-form">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        {{form.product|as_crispy_field}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{form.quantity|as_crispy_field}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{form.price|as_crispy_field}}
+                                        <span class="text-sm mt-0" id="showTotal">Total Price: <span
+                                                id="totalPrice"></span></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{form.remark|as_crispy_field}}
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="reset" class="mr-1 btn btn-secondary">Reset</button>
+                                    <button class=" btn btn-primary ml-2" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock body %}
+
+
+{% block extra_script %}
+
+<script src="{% static 'js/purchases/purchase-create.js' %}"></script>
+{% endblock extra_script %}

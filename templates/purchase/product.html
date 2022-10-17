@@ -1,0 +1,54 @@
+{% extends '../base.html' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">Purchases</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Serial</th>
+                                <th>Purchase No.</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in products %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ product.purchase_no }}</td>
+                                    <td>{{ product.product }}</td>
+                                    <td>{{ product.price }}</td>
+                                    <td>{{ product.quantity }}</td>
+                                    <td>
+                                        {% if request.user.is_staff %}
+                                        <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group" role="group" aria-label="First group">
+                                                <a href="{{ product.get_update_url }}" class="btn btn-sm mb-1 btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                                <a target="_blank" href="{{ product.get_invoice_url }}" class="btn btn-sm mb-1 btn-outline-secondary"><i class="fa fa-file-alt"></i></a>
+                                                <a href="{{ product.get_delete_url }}" class="btn btn-sm mb-1 btn-outline-danger"><i class="fa fa-trash-alt"></i></a>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

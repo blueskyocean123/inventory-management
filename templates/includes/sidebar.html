@@ -1,0 +1,131 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'core:home' %}">
+        <div class="sidebar-brand-icon">
+            <i class="far fa-building"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Inventory</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'core:home' %}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    {% if user.is_staff or user.is_customer %}
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#order" aria-expanded="true"
+            aria-controls="order">
+            <i class="fa fa-file-invoice"></i>
+            <span>Oeders</span>
+        </a>
+        <div id="order" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'order:order-list' %}">Orders</a>
+            </div>
+        </div>
+    </li>
+
+    {% if not user.is_customer and user.is_staff or user.is_superuser %}
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#products" aria-expanded="true"
+            aria-controls="products">
+            <i class="fas fa-fw fa-boxes"></i>
+            <span>Products</span>
+        </a>
+        <div id="products" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'core:product-create' %}">Add Products</a>
+                <a class="collapse-item" href="{% url 'core:product' %}">Products</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sales" aria-expanded="true"
+            aria-controls="sales">
+            <i class="fas fa-fw fa-dollar-sign"></i>
+            <span>Sales</span>
+        </a>
+        <div id="sales" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'sell:sale-create' %}">New Sale</a>
+                <a class="collapse-item" href="{% url 'sell:sales' %}">Sales</a>
+                <a class="collapse-item" href="{% url 'sell:customer' %}">Customers</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#purchases" aria-expanded="true"
+            aria-controls="purchases">
+            {% comment %} <i class="fas fa-fw fa-dolly-flatbed"></i> {% endcomment %}
+            <i class="fas fa-fw fa-money-check-alt"></i>
+            <span>Purchases</span>
+        </a>
+        <div id="purchases" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'purchase:purchase-create' %}">New Purchase</a>
+                <a class="collapse-item" href="{% url 'purchase:product' %}">Purchases</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#catalog" aria-expanded="true"
+            aria-controls="catalog">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Catalog</span>
+        </a>
+        <div id="catalog" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'core:category' %}">Category</a>
+                <a class="collapse-item" href="{% url 'core:subcategory' %}">Sub Category</a>
+                <a class="collapse-item" href="{% url 'core:warehouse' %}">Warehouses</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#settings" aria-expanded="true"
+            aria-controls="settings">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span>Settings</span>
+        </a>
+        <div id="settings" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'core:user-management' %}">User Management</a>
+            </div>
+        </div>
+    </li>
+
+    {% endif %}
+
+    {% endif %}
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>

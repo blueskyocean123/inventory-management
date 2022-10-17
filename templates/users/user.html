@@ -1,0 +1,61 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+<main>
+    <div class="container-fluid">
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Users</li>
+        </ol>
+
+        <div class="card mb-4">
+            <h5 class="card-header">All Users</h5>
+            <div class="card-body">
+                <div class="department-list">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                {% for users in user %}
+                                    <tr>
+                                        <td>{{ user.id }}</td>
+                                        <td>{{ user.name }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.phone }}</td>
+<!--                                        <td>-->
+<!--                                            {% if request.user.is_staff %}-->
+<!--                                            <a href="{{ customer.get_update_url }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></a>-->
+<!--                                            <a href="{{ customer.get_delete_url }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash-alt"></i></a>-->
+<!--                                            {% endif %}-->
+<!--                                        </td>-->
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock body %}

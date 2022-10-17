@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Orders{% endblock title %}
+
+{% block body %}
+
+<main>
+    <div class="row">
+        <div class="col">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">{{title|title}}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="category-form">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+
+                                {% if product %}
+
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <td>{{product}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Price</th>
+                                            <td>{{product.sell_price}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>In stock</th>
+                                            <td>{{product.quantity}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Description</th>
+                                            <td>{{product.description}}</td>
+                                        </tr>
+                                    </table>
+
+                                {% elif object %}
+
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <td>{{object}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Price</th>
+                                            <td>{{object.product.sell_price}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>In stock</th>
+                                            <td>{{object.product.quantity}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Description</th>
+                                            <td>{{object.product.description}}</td>
+                                        </tr>
+                                    </table>
+
+                                {% endif %}
+
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="row justify-content-end">
+                                            <div class="col-md-6">
+                                                {{ form.quantity|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="buttons-right">
+                                        <button class="btn btn-primary" type="submit">Order</button>
+                                        <a href="{% url 'order:order-list' %}" class="btn btn-secondary">Cancel</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">Orders</h6>
+                </div>
+                <div class="card-body">
+                    <div class="department-list">
+                        <div class="table-responsive">
+                            <table class="table" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                        <th>Order Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                        <tr>
+                                            <td>{{ order.product }}</td>
+                                            <td>{{ order.product.sell_price }}</td>
+                                            <td>{{ order.quantity }}</td>
+                                            <td>{{ order.total_item_price }}</td>
+                                            <td>
+                                                {% if order.status == True %}
+                                                    <span class="badge badge-success">Done</span>
+                                                {% else %}
+                                                    <span class="badge badge-warning">Pending</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{{ order.get_update_url }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                                <a href="{{ order.get_delete_url }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock body %}

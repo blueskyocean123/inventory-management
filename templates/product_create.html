@@ -1,0 +1,79 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}New Product - {% endblock title %}
+
+{% block body %}
+<main id="productCreate">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">{{title|title}}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="Product-form">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        {{form.warehouse|as_crispy_field}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_category" class="requiredField">Category</label>
+                                        <select onchange="selectSubcategory()" id="id_category" name="category"
+                                            class="select form-control">
+                                            {% for value, name in form.category.field.choices %}
+                                            <option value="{{ value }}"
+                                                {% if value == form.category.value %}selected{% endif %}>{{ name }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_subcategory" class="">Subcategory</label>
+                                        <select name="subcategory" class="select form-control" id="id_subcategory">
+                                            {% for value, name in form.subcategory.field.choices %}
+                                            <option value="{{ value }}"
+                                                {% if value == form.subcategory.value %}selected{% endif %}>{{ name }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        {{form.product_name|as_crispy_field}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{form.quantity|as_crispy_field}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{form.sell_price|as_crispy_field}}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{form.description|as_crispy_field}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-secondary" type="reset">Reset</button>
+                                <button class="btn btn-primary ml-2" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock body %}
+
+
+
+{% block extra_script %}
+<script src="{% static 'js/core/product_create.js' %}"></script>
+{% endblock extra_script %}

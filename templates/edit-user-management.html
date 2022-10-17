@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Manage User - {% endblock title %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header">Edit User</div>
+                <div class="card-body">
+                    <form action="" method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    {{ form.username|as_crispy_field }}
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ form.email|as_crispy_field }}
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ form.first_name|as_crispy_field }}
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ form.last_name|as_crispy_field }}
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ form.organization|as_crispy_field }}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    {{ form.is_active|as_crispy_field }}
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ form.is_staff|as_crispy_field }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <a href="{% url 'core:user-management' %}" class="btn btn-secondary">Cancel</a>
+                            <button class="btn btn-primary ml-2" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
